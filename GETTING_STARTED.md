@@ -1017,6 +1017,24 @@ This can also be combined with other arguments:
 FactoryGirl.lint factories_to_lint, traits: true
 ```
 
+### Linting abstract factories
+Sometimes there is no need to create a complete factory. Example: big complicated models with lots of relations, STI and so on. In this cases better to create 'abstract' factory with common attributes, and handle other ways by traits or inheritance. In this case you need to say linter to skip such factories.
+
+1. You need to add the new option on factory definition: `abstract`. Like
+
+    ```ruby
+    factory :user, abstract: true do
+    ...
+    ```
+
+2. All traits in abstract factories are treated as a complete realization for this factory. If it isn't, you can pass additional flag to trait definition, like
+
+    ```ruby
+    ...
+    trait :deleted, abstract: true do
+    ...
+    ```
+
 Custom Construction
 -------------------
 

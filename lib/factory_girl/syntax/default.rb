@@ -29,8 +29,8 @@ module FactoryGirl
           FactoryGirl.register_sequence(Sequence.new(name, *args, &block))
         end
 
-        def trait(name, &block)
-          FactoryGirl.register_trait(Trait.new(name, &block))
+        def trait(name, options = {}, &block)
+          FactoryGirl.register_trait(Trait.new(name, options, &block))
         end
 
         def to_create(&block)

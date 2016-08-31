@@ -16,6 +16,10 @@ describe FactoryGirl::Factory do
     expect(@factory.build_class).to eq @class
   end
 
+  it "not abstract" do
+    expect(@factory.abstract?).to eq false
+  end
+
   it "passes a custom creation block" do
     strategy = stub("strategy", result: nil, add_observer: true)
     FactoryGirl::Strategy::Build.stubs(new: strategy)
@@ -154,6 +158,11 @@ end
 describe FactoryGirl::Factory, "when defined with a custom class name" do
   subject           { FactoryGirl::Factory.new(:author, class: :argument_error) }
   its(:build_class) { should eq ArgumentError }
+end
+
+describe FactoryGirl::Factory, "when defined as abstract" do
+  subject           { FactoryGirl::Factory.new(:author, abstract: true) }
+  its(:abstract?) { should eq true }
 end
 
 describe FactoryGirl::Factory, "with a name ending in s" do

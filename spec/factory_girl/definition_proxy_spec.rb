@@ -201,6 +201,12 @@ describe FactoryGirl::DefinitionProxy, "#trait" do
     proxy.trait(:male, &male_trait)
     expect(subject).to have_trait(:male).with_block(male_trait)
   end
+
+  it "declares abstract trait" do
+    male_trait = Proc.new { gender("Male") }
+    proxy.trait(:male, abstract: true, &male_trait)
+    expect(subject).to have_trait(:male).with_block(male_trait)
+  end
 end
 
 describe FactoryGirl::DefinitionProxy, "#initialize_with" do

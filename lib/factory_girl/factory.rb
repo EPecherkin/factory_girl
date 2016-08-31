@@ -12,6 +12,7 @@ module FactoryGirl
       @parent           = options[:parent]
       @aliases          = options[:aliases] || []
       @class_name       = options[:class]
+      @abstract         = options[:abstract] || false
       @definition       = Definition.new(@name, options[:traits] || [])
       @compiled         = false
     end
@@ -95,6 +96,10 @@ module FactoryGirl
       end
     end
 
+    def abstract?
+      @abstract
+    end
+
     protected
 
     def class_name
@@ -139,7 +144,7 @@ module FactoryGirl
     private
 
     def assert_valid_options(options)
-      options.assert_valid_keys(:class, :parent, :aliases, :traits)
+      options.assert_valid_keys(:class, :parent, :aliases, :traits, :abstract)
     end
 
     def parent
