@@ -54,6 +54,8 @@ module FactoryGirl
     end
 
     def lint_factory(factory)
+      return [] if factory.abstract?
+
       result = []
       begin
         FactoryGirl.create(factory.name)
@@ -65,12 +67,14 @@ module FactoryGirl
 
     def lint_traits(factory)
       result = []
-      factory.definition.defined_traits.map(&:name).each do |trait_name|
+      factory.definition.defined_traits.each do |trait|
+        next if trait.abstract?
+
         begin
-          FactoryGirl.create(factory.name, trait_name)
+          FactoryGirl.create(factory.name, trait.name)
         rescue => error
           result |=
-              [FactoryTraitError.new(error, factory, trait_name)]
+              [FactoryTraitError.new(error, factory, trait.name)]
         end
       end
       result

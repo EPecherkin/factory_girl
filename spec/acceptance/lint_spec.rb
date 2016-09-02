@@ -37,6 +37,9 @@ The following factories are invalid:
       factory :user do
         name 'assigned'
       end
+
+      factory :abstract_user, class: 'User', abstract: true do
+      end
     end
 
     expect { FactoryGirl.lint }.not_to raise_error
@@ -128,6 +131,13 @@ The following factories are invalid:
             name "Yep"
             trait :renamed do
               name "Yessir"
+            end
+          end
+
+          factory :abstract_user, class: 'User', abstract: true do
+            trait :abstrat_trait, abstract: true
+            trait :proper_trait do
+              name 'assigned'
             end
           end
         end

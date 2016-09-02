@@ -163,8 +163,8 @@ module FactoryGirl
       @child_factories << [name, options, block]
     end
 
-    def trait(name, &block)
-      @definition.define_trait(Trait.new(name, &block))
+    def trait(name, options = {}, &block)
+      @definition.define_trait(Trait.new(name, options, &block))
     end
 
     def initialize_with(&block)

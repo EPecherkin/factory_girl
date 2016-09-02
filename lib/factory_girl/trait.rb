@@ -3,10 +3,12 @@ module FactoryGirl
   class Trait
     attr_reader :name, :definition
 
-    def initialize(name, &block)
+    def initialize(name, options = {}, &block)
+      assert_valid_options(options)
       @name = name
       @block = block
       @definition = Definition.new(@name)
+      @abstract = options[:abstract] || false
 
       proxy = FactoryGirl::DefinitionProxy.new(@definition)
       proxy.instance_eval(&@block) if block_given?
@@ -24,7 +26,16 @@ module FactoryGirl
         block == other.block
     end
 
+    def abstract?
+      @abstract
+    end
+
     protected
+
     attr_reader :block
+
+    def assert_valid_options(options)
+      options.assert_valid_keys(:abstract)
+    end
   end
 end
